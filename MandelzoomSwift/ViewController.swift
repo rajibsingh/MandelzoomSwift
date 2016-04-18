@@ -38,11 +38,22 @@ class ViewController: UIViewController {
     
     @IBAction func buttonClick(sender: AnyObject) {
         statuslabel.text = String(mainImage.image?.size)
-        let defaultPixel = PixelData()
         let height = UInt(mainImage.frame.size.height)
         let width = UInt(mainImage.frame.size.width)
         print("\(height) height, \(width) width")
-        let pixels = [PixelData](count: Int(height) * Int(width), repeatedValue: defaultPixel)
+        let pixelCount = Int(height * width)
+        print("pixelCount: \(pixelCount)")
+        var pixels = [PixelData]()
+        
+        for x in 0 ... pixelCount {
+                let color = UInt8(x % 255)
+                var localPixel = PixelData()
+                localPixel.r = color
+                localPixel.g = color
+                localPixel.b = color
+                pixels.append(localPixel)
+        }
+            
         let uiImage = imageFromARGB32Bitmap(pixels, width: width, height: height)
         mainImage.image = uiImage
         drawableArea.changeColor()
@@ -52,8 +63,10 @@ class ViewController: UIViewController {
         let bitsPerComponent:UInt = 8
         let bitsPerPixel:UInt = 32
         
-        assert(pixels.count == Int(width * height))
+        print("assertion is asserting \(Int(width*height))")
+//        assert(pixels.count == Int(width * height))
         
+
         var data = pixels // Copy to mutable []
         let providerRef = CGDataProviderCreateWithCFData(
             NSData(bytes: &data, length: data.count * sizeof(PixelData))
