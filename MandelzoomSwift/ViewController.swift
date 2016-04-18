@@ -29,9 +29,9 @@ class ViewController: UIViewController {
     
     struct PixelData {
         var a:UInt8 = 255
-        var r:UInt8 = 50
-        var g:UInt8 =  50
-        var b:UInt8 = 172
+        var r:UInt8 = 0
+        var g:UInt8 = 0
+        var b:UInt8 = 0
     }
 
     @IBOutlet weak var statuslabel: UILabel!
@@ -39,13 +39,11 @@ class ViewController: UIViewController {
     @IBAction func buttonClick(sender: AnyObject) {
         statuslabel.text = String(mainImage.image?.size)
         let defaultPixel = PixelData()
-//        let height = mainImage.image?.size.height
-//        let width = mainImage.image?.size.width
-//        let arraySize = height * width
-//        let pixels = [PixelData](count: height * width, repeatedValue: defaultPixel)
-//        let uiImage = imageFromARGB32Bitmap(pixels, width, height)
-        let pixels = [PixelData](count: 40000, repeatedValue: defaultPixel)
-        let uiImage = imageFromARGB32Bitmap(pixels, width: 200, height: 200)
+        let height = UInt(mainImage.frame.size.height)
+        let width = UInt(mainImage.frame.size.width)
+        print("\(height) height, \(width) width")
+        let pixels = [PixelData](count: Int(height) * Int(width), repeatedValue: defaultPixel)
+        let uiImage = imageFromARGB32Bitmap(pixels, width: width, height: height)
         mainImage.image = uiImage
         drawableArea.changeColor()
     }

@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Peregrine-Falcon-Fastest-Animal-ATTACK.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="jya-Cd-Ole">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jya-Cd-Ole">
                                 <rect key="frame" x="59" y="28" width="296" height="334"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Peregrine" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z1o-9C-vN9">
@@ -52,7 +52,4 @@
             <point key="canvasLocation" x="305" y="372"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="Peregrine-Falcon-Fastest-Animal-ATTACK.jpg" width="1024" height="612"/>
-    </resources>
 </document>
