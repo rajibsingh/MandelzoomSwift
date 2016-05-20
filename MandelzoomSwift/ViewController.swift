@@ -12,8 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var mainImage: UIImageView!
     @IBOutlet weak var drawableArea: DrawLineView!
-    
-    
+
     private let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
     private let bitmapInfo:CGBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
     
@@ -40,32 +39,29 @@ class ViewController: UIViewController {
         statuslabel.text = String(mainImage.image?.size)
         let height = UInt(mainImage.frame.size.height)
         let width = UInt(mainImage.frame.size.width)
-        print("\(height) height, \(width) width")
+//        print("\(height) height, \(width) width")
         let pixelCount = Int(height * width)
         print("pixelCount: \(pixelCount)")
         var pixels = [PixelData]()
         
-        for x in 0 ... pixelCount {
-                let color = UInt8(x % 255)
+        for _ in 0 ... pixelCount {
                 var localPixel = PixelData()
-                localPixel.r = color
-                localPixel.g = color
-                localPixel.b = color
+                localPixel.r = UInt8(arc4random_uniform(256))
+                localPixel.g = UInt8(arc4random_uniform(256))
+                localPixel.b = UInt8(arc4random_uniform(256))
                 pixels.append(localPixel)
         }
-            
+        
         let uiImage = imageFromARGB32Bitmap(pixels, width: width, height: height)
         mainImage.image = uiImage
-        drawableArea.changeColor()
     }
     
     func imageFromARGB32Bitmap(pixels:[PixelData], width:UInt, height:UInt)->UIImage {
         let bitsPerComponent:UInt = 8
         let bitsPerPixel:UInt = 32
         
-        print("assertion is asserting \(Int(width*height))")
+//        print("assertion is asserting \(Int(width*height))")
 //        assert(pixels.count == Int(width * height))
-        
 
         var data = pixels // Copy to mutable []
         let providerRef = CGDataProviderCreateWithCFData(
