@@ -9,12 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController {
-
     @IBOutlet weak var mainImage: UIImageView!
     @IBOutlet weak var drawableArea: DrawLineView!
-
-    private let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
-    private let bitmapInfo:CGBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,54 +22,60 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBOutlet weak var statuslabel: UILabel!
+
+    @IBAction func buttonClick(sender: AnyObject) {
+        statuslabel.text = String(mainImage.image?.size)
+        let height = Int(mainImage.frame.size.height)
+        let width = Int(mainImage.frame.size.width)
+        let renderer:MandelbrotRenderer = MandelbrotRenderer(height:height, width:width)
+        let uiImage = renderer.imageFromARGB32Bitmap()
+        mainImage.image = uiImage
+    }
+}
+
+class MandelbrotRenderer {
+    
+    private var ht:Int
+    private var wth:Int
+    private var pixels:[PixelData]
+    private let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
+    private let bitmapInfo:CGBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
+    
     struct PixelData {
         var a:UInt8 = 255
         var r:UInt8 = 0
         var g:UInt8 = 0
         var b:UInt8 = 0
     }
-
-    @IBOutlet weak var statuslabel: UILabel!
     
-    @IBAction func buttonClick(sender: AnyObject) {
-        statuslabel.text = String(mainImage.image?.size)
-        let height = UInt(mainImage.frame.size.height)
-        let width = UInt(mainImage.frame.size.width)
-//        print("\(height) height, \(width) width")
+    init(height:Int, width:Int) {
+        ht = height
+        wth = width
         let pixelCount = Int(height * width)
-        print("pixelCount: \(pixelCount)")
-        var pixels = [PixelData]()
-        
+        pixels = [PixelData]()
         for _ in 0 ... pixelCount {
-                var localPixel = PixelData()
-                localPixel.r = UInt8(arc4random_uniform(256))
-                localPixel.g = UInt8(arc4random_uniform(256))
-                localPixel.b = UInt8(arc4random_uniform(256))
-                pixels.append(localPixel)
+            var localPixel = PixelData()
+            localPixel.r = UInt8(arc4random_uniform(256))
+            localPixel.g = UInt8(arc4random_uniform(256))
+            localPixel.b = UInt8(arc4random_uniform(256))
+            pixels.append(localPixel)
         }
-        
-        let uiImage = imageFromARGB32Bitmap(pixels, width: width, height: height)
-        mainImage.image = uiImage
     }
     
-    func imageFromARGB32Bitmap(pixels:[PixelData], width:UInt, height:UInt)->UIImage {
+    func imageFromARGB32Bitmap()->UIImage {
         let bitsPerComponent:UInt = 8
         let bitsPerPixel:UInt = 32
-        
-//        print("assertion is asserting \(Int(width*height))")
-//        assert(pixels.count == Int(width * height))
-
         var data = pixels // Copy to mutable []
         let providerRef = CGDataProviderCreateWithCFData(
             NSData(bytes: &data, length: data.count * sizeof(PixelData))
         )
-        
         let cgim = CGImageCreate(
-            Int(width),
-            Int(height),
+            Int(wth),
+            Int(ht),
             Int(bitsPerComponent),
             Int(bitsPerPixel),
-            Int(width) * sizeof(PixelData),
+            Int(wth) * sizeof(PixelData),
             rgbColorSpace,
             bitmapInfo,
             providerRef,
@@ -83,7 +85,4 @@ class ViewController: UIViewController {
         )
         return UIImage(CGImage: cgim!)
     }
-
-
 }
-
