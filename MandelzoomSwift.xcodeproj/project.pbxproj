@@ -13,7 +13,6 @@
 		35BA3AEC1CC338380077128F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35BA3AEB1CC338380077128F /* Assets.xcassets */; };
 		35BA3AEF1CC338380077128F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35BA3AED1CC338380077128F /* LaunchScreen.storyboard */; };
 		35BA3AFA1CC338380077128F /* MandelzoomSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BA3AF91CC338380077128F /* MandelzoomSwiftTests.swift */; };
-		35BA3B051CC33D9E0077128F /* Peregrine-Falcon-Fastest-Animal-ATTACK.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35BA3B041CC33D9E0077128F /* Peregrine-Falcon-Fastest-Animal-ATTACK.jpg */; };
 		35BA3B071CC3CB9C0077128F /* DrawLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BA3B061CC3CB9C0077128F /* DrawLineView.swift */; };
 		35C43E261CEFC70400246646 /* MandelbrotRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C43E251CEFC70400246646 /* MandelbrotRenderer.swift */; };
 /* End PBXBuildFile section */
@@ -39,7 +38,6 @@
 		35BA3AF51CC338380077128F /* MandelzoomSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MandelzoomSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35BA3AF91CC338380077128F /* MandelzoomSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MandelzoomSwiftTests.swift; sourceTree = "<group>"; };
 		35BA3AFB1CC338380077128F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		35BA3B041CC33D9E0077128F /* Peregrine-Falcon-Fastest-Animal-ATTACK.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Peregrine-Falcon-Fastest-Animal-ATTACK.jpg"; sourceTree = "<group>"; };
 		35BA3B061CC3CB9C0077128F /* DrawLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawLineView.swift; sourceTree = "<group>"; };
 		35C43E251CEFC70400246646 /* MandelbrotRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MandelbrotRenderer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,7 +81,6 @@
 		35BA3AE31CC338380077128F /* MandelzoomSwift */ = {
 			isa = PBXGroup;
 			children = (
-				35BA3B041CC33D9E0077128F /* Peregrine-Falcon-Fastest-Animal-ATTACK.jpg */,
 				35BA3AE41CC338380077128F /* AppDelegate.swift */,
 				35BA3AE61CC338380077128F /* ViewController.swift */,
 				35BA3AE81CC338380077128F /* Main.storyboard */,
@@ -189,7 +186,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				35BA3AEF1CC338380077128F /* LaunchScreen.storyboard in Resources */,
-				35BA3B051CC33D9E0077128F /* Peregrine-Falcon-Fastest-Animal-ATTACK.jpg in Resources */,
 				35BA3AEC1CC338380077128F /* Assets.xcassets in Resources */,
 				35BA3AEA1CC338380077128F /* Main.storyboard in Resources */,
 			);

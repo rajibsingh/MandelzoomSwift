@@ -80,7 +80,7 @@ class MandelbrotRenderer {
         return count
     }
 
-    // TODO: borrowed this code from somewhere on the web - find the url
+    // code to create image from http://blog.human-friendly.com/drawing-images-from-pixel-data-in-swift
     func getImage() -> UIImage {
         let bitsPerComponent: UInt = 8
         let bitsPerPixel: UInt = 32
