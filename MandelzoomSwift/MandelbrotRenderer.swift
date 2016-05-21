@@ -65,9 +65,10 @@ class MandelbrotRenderer {
         let blackPixel = PixelData(red: 0, green: 0, blue: 0)
         let whitePixel = PixelData(red: 255, green: 255, blue: 255)
 
+        print(countArray)
 
         for count in countArray {
-            if (count >= 1) {
+            if (count >= 5) {
                 pixels.append(blackPixel)
             } else {
                 pixels.append(whitePixel)
