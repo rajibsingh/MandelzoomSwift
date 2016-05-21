@@ -10,7 +10,11 @@ import XCTest
 @testable import MandelzoomSwift
 
 class MandelzoomSwiftTests: XCTestCase {
-    
+
+    private var tl: ComplexNumber = ComplexNumber(x: -1.0, y: 0.75)
+    private var br: ComplexNumber = ComplexNumber(x: 0.5, y: -1)
+
+
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -29,7 +33,8 @@ class MandelzoomSwiftTests: XCTestCase {
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock {
-            // Put the code you want to measure the time of here.
+            let renderer: MandelbrotRenderer = MandelbrotRenderer(height: 200, width: 200, topLeft: self.tl, bottomRight: self.br)
+            let image = renderer.getImage()
         }
     }
 
@@ -58,6 +63,14 @@ class MandelzoomSwiftTests: XCTestCase {
         t1 = t1.add(c)
         XCTAssertEqual(t1.x, 1)
         XCTAssertEqual(t1.y, -97)
+    }
+
+    func testMoreComplexNumbers() {
+        //-2+3i
+        let c = ComplexNumber(x: -2, y: 3)
+        var c2 = c.square()
+        XCTAssertEqual(c2.x, -5)
+        XCTAssertEqual(c2.y, -12)
     }
 
     func testRenderer() {
