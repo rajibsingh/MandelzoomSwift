@@ -28,7 +28,9 @@ class ViewController: UIViewController {
         statuslabel.text = String(mainImage.image?.size)
         let height = Int(mainImage.frame.size.height)
         let width = Int(mainImage.frame.size.width)
-        let renderer:MandelbrotRenderer = MandelbrotRenderer(height:height, width:width)
+        let tl: ComplexNumber = ComplexNumber(x: -1.0, y: 0.75)
+        let br: ComplexNumber = ComplexNumber(x: 0.5, y: -1)
+        let renderer: MandelbrotRenderer = MandelbrotRenderer(height: height, width: width, topLeft: tl, bottomRight: br)
         let uiImage = renderer.imageFromARGB32Bitmap()
         mainImage.image = uiImage
     }

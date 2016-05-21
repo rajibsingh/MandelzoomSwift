@@ -32,5 +32,32 @@ class MandelzoomSwiftTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+
+    func testComplexNumbers() {
+        let c = ComplexNumber(x: 1, y: 1)
+        var t1 = c.square()
+        XCTAssertEqual(t1.x, 0)
+        XCTAssertEqual(t1.y, 2)
+
+        t1 = t1.add(c)
+        XCTAssertEqual(t1.x, 1)
+        XCTAssertEqual(t1.y, 3)
+
+        t1 = t1.square()
+        XCTAssertEqual(t1.x, -8)
+        XCTAssertEqual(t1.y, 6)
+
+        t1 = t1.add(c)
+        XCTAssertEqual(t1.x, -7)
+        XCTAssertEqual(t1.y, 7)
+
+        t1 = t1.square()
+        XCTAssertEqual(t1.x, 0)
+        XCTAssertEqual(t1.y, -98)
+
+        t1 = t1.add(c)
+        XCTAssertEqual(t1.x, 1)
+        XCTAssertEqual(t1.y, -97)
+    }
     
 }
