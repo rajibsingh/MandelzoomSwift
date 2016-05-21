@@ -13,8 +13,7 @@ class MandelbrotRenderer {
     private let bitmapInfo: CGBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
     private let topLeft: ComplexNumber
     private let bottomRight: ComplexNumber
-    private let iterations = 1000
-    private let countMax = 500
+    private let threshold = 200
     private var countArray = [Int]()
 
     struct PixelData {
@@ -34,7 +33,6 @@ class MandelbrotRenderer {
         //height and width of window
         ht = height
         wth = width
-
         //coordinates of graph area
         self.topLeft = topLeft
         self.bottomRight = bottomRight
@@ -47,8 +45,8 @@ class MandelbrotRenderer {
         let dY = (bottomRight.y - topRight.y) / Double(height)
         let offset = ComplexNumber(x: dX, y: dY)
         print("offset: \(offset)")
-        for stepX: Int in 0 ... Int(width) {
-            for stepY: Int in 0 ... Int(height) {
+        for stepY: Int in 0 ... Int(height) {
+            for stepX: Int in 0 ... Int(width) {
                 let valX = topLeft.x + (Double(stepX) * offset.x)
                 let valY = topLeft.y + (Double(stepY) * offset.y)
                 let c: ComplexNumber = ComplexNumber(x: valX, y: valY)
@@ -63,10 +61,10 @@ class MandelbrotRenderer {
         let whitePixel = PixelData(red: 255, green: 255, blue: 255)
 
         for count in countArray {
-            if (count >= countMax) {
-                pixels.append(blackPixel)
-            } else {
+            if (count >= threshold) {
                 pixels.append(whitePixel)
+            } else {
+                pixels.append(blackPixel)
             }
         }
     }
@@ -74,7 +72,7 @@ class MandelbrotRenderer {
     func getCount(c: ComplexNumber) -> Int {
         var count = 0
         var z = ComplexNumber(x: 0, y: 0)
-        while (count < iterations && z.size() < 2) {
+        while (count < threshold && z.size() < 2) {
             count++
             z = z.squaredPlus(c)
         }
