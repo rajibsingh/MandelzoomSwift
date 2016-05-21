@@ -1,8 +1,6 @@
 //  MandelbrotRenderer.swift
 //  MandelzoomSwift
 //
-//  Created by Rajib Singh on 5/20/16.
-//  Copyright © 2016 Sepoy Software. All rights reserved.
 
 import UIKit
 import Foundation
@@ -41,23 +39,21 @@ class MandelbrotRenderer {
         self.bottomRight = bottomRight
         //derive topRight and bottomLeft
         let topRight = ComplexNumber(x: bottomRight.x, y: topLeft.y)
-        let bottomLeft = ComplexNumber(x: topRight.x, y: bottomRight.y)
-
-        //debug info
-        var points = [ComplexNumber(x: 0, y: 0)]
+        let bottomLeft = ComplexNumber(x: topLeft.x, y: bottomRight.y)
 
         //calculate offset
         let dX = (topRight.x - topLeft.x) / Double(width)
         let dY = (bottomRight.y - topRight.y) / Double(height)
         let offset = ComplexNumber(x: dX, y: dY)
-
-
+        print("offset: \(offset)")
         for stepX: Int in 0 ... Int(width) {
             for stepY: Int in 0 ... Int(height) {
-                let valX = topRight.x + Double(stepX) * offset.x
-                let valY = topRight.y + Double(stepY) * offset.y
+                let valX = topLeft.x + Double(stepX) * offset.x
+                let valY = topLeft.y + Double(stepY) * offset.y
                 let c: ComplexNumber = ComplexNumber(x: valX, y: valY)
                 var count: Int = getCount(c)
+                print("c is \(c)")
+                print("count is \(count)")
                 countArray.append(count)
             }
         }
@@ -65,10 +61,8 @@ class MandelbrotRenderer {
         let blackPixel = PixelData(red: 0, green: 0, blue: 0)
         let whitePixel = PixelData(red: 255, green: 255, blue: 255)
 
-        print(countArray)
-
         for count in countArray {
-            if (count >= 5) {
+            if (count >= 10) {
                 pixels.append(blackPixel)
             } else {
                 pixels.append(whitePixel)
@@ -86,6 +80,7 @@ class MandelbrotRenderer {
         return count
     }
 
+    // TODO: borrowed this code from somewhere on the web - find the url
     func imageFromARGB32Bitmap() -> UIImage {
         let bitsPerComponent: UInt = 8
         let bitsPerPixel: UInt = 32
@@ -110,9 +105,12 @@ class MandelbrotRenderer {
     }
 }
 
-class ComplexNumber {
+class ComplexNumber: CustomStringConvertible {
     var x: Double = 0
     var y: Double = 0
+    var description: String {
+        return "\(self.x),\(self.y)"
+    }
 
     init(x: Double, y: Double) {
         self.x = x
