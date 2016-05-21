@@ -81,7 +81,7 @@ class MandelbrotRenderer {
     }
 
     // TODO: borrowed this code from somewhere on the web - find the url
-    func imageFromARGB32Bitmap() -> UIImage {
+    func getImage() -> UIImage {
         let bitsPerComponent: UInt = 8
         let bitsPerPixel: UInt = 32
         var data = pixels // Copy to mutable []

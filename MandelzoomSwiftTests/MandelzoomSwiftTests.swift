@@ -59,5 +59,16 @@ class MandelzoomSwiftTests: XCTestCase {
         XCTAssertEqual(t1.x, 1)
         XCTAssertEqual(t1.y, -97)
     }
+
+    func testRenderer() {
+        let tl: ComplexNumber = ComplexNumber(x: -1.0, y: 0.75)
+        let br: ComplexNumber = ComplexNumber(x: 0.5, y: -1)
+        let renderer: MandelbrotRenderer = MandelbrotRenderer(height: 200, width: 200, topLeft: tl, bottomRight: br)
+        // check that renderer was created
+        XCTAssertNotNil(renderer)
+        // check that render can return a picture
+        let image = renderer.getImage()
+        XCTAssertNotNil(image)
+    }
     
 }
