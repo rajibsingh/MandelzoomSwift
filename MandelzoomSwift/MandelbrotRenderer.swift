@@ -36,17 +36,32 @@ class MandelbrotRenderer {
         //coordinates of graph area
         self.topLeft = topLeft
         self.bottomRight = bottomRight
+    }
+
+    func getCount(c: ComplexNumber) -> Int {
+        var count = 0
+        var z = ComplexNumber(x: 0, y: 0)
+        while (count < threshold && z.size() < 2) {
+            count = count + 1
+            z = z.squaredPlus(c)
+        }
+        return count
+    }
+
+    // code to create image from http://blog.human-friendly.com/drawing-images-from-pixel-data-in-swift
+    func getImage() -> UIImage {
         //derive topRight and bottomLeft
         let topRight = ComplexNumber(x: bottomRight.x, y: topLeft.y)
         let bottomLeft = ComplexNumber(x: topLeft.x, y: bottomRight.y)
 
         //calculate offset
-        let dX = (topRight.x - topLeft.x) / Double(width)
-        let dY = (bottomRight.y - topRight.y) / Double(height)
+        let dX = (topRight.x - topLeft.x) / Double(wth)
+        let dY = (bottomRight.y - topRight.y) / Double(ht)
         let offset = ComplexNumber(x: dX, y: dY)
         print("offset: \(offset)")
-        for stepY: Int in 0 ... Int(height) {
-            for stepX: Int in 0 ... Int(width) {
+
+        for stepY: Int in 0 ... Int(ht) {
+            for stepX: Int in 0 ... Int(wth) {
                 let valX = topLeft.x + (Double(stepX) * offset.x)
                 let valY = topLeft.y + (Double(stepY) * offset.y)
                 let c: ComplexNumber = ComplexNumber(x: valX, y: valY)
@@ -67,20 +82,7 @@ class MandelbrotRenderer {
                 pixels.append(blackPixel)
             }
         }
-    }
 
-    func getCount(c: ComplexNumber) -> Int {
-        var count = 0
-        var z = ComplexNumber(x: 0, y: 0)
-        while (count < threshold && z.size() < 2) {
-            count++
-            z = z.squaredPlus(c)
-        }
-        return count
-    }
-
-    // code to create image from http://blog.human-friendly.com/drawing-images-from-pixel-data-in-swift
-    func getImage() -> UIImage {
         let bitsPerComponent: UInt = 8
         let bitsPerPixel: UInt = 32
         var data = pixels // Copy to mutable []
