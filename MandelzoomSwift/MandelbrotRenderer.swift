@@ -8,13 +8,11 @@ import Foundation
 class MandelbrotRenderer {
     private var ht: Int
     private var wth: Int
-    private var pixels: [PixelData] = [PixelData]()
     private let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
     private let bitmapInfo: CGBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
     private let topLeft: ComplexNumber
     private let bottomRight: ComplexNumber
     private let threshold = 200
-    private var countArray = [Int]()
 
     struct PixelData {
         var a: UInt8 = 255
@@ -50,9 +48,8 @@ class MandelbrotRenderer {
 
     // code to create image from http://blog.human-friendly.com/drawing-images-from-pixel-data-in-swift
     func getImage() -> UIImage {
-        //derive topRight and bottomLeft
+        //derive topRight. Turns out I don't need bottomLeft
         let topRight = ComplexNumber(x: bottomRight.x, y: topLeft.y)
-        let bottomLeft = ComplexNumber(x: topLeft.x, y: bottomRight.y)
 
         //calculate offset
         let dX = (topRight.x - topLeft.x) / Double(wth)
@@ -60,12 +57,13 @@ class MandelbrotRenderer {
         let offset = ComplexNumber(x: dX, y: dY)
         print("offset: \(offset)")
 
+        var countArray = [Int]()
         for stepY: Int in 0 ... Int(ht) {
             for stepX: Int in 0 ... Int(wth) {
                 let valX = topLeft.x + (Double(stepX) * offset.x)
                 let valY = topLeft.y + (Double(stepY) * offset.y)
                 let c: ComplexNumber = ComplexNumber(x: valX, y: valY)
-                var count: Int = getCount(c)
+                let count: Int = getCount(c)
 //                print("c is \(c)")
 //                print("count is \(count)")
                 countArray.append(count)
@@ -75,11 +73,82 @@ class MandelbrotRenderer {
         let blackPixel = PixelData(red: 0, green: 0, blue: 0)
         let whitePixel = PixelData(red: 255, green: 255, blue: 255)
 
+        var pixels = [PixelData]()
         for count in countArray {
             if (count >= threshold) {
                 pixels.append(whitePixel)
             } else {
                 pixels.append(blackPixel)
+            }
+        }
+
+        let bitsPerComponent: UInt = 8
+        let bitsPerPixel: UInt = 32
+        var data = pixels // Copy to mutable []
+        let providerRef = CGDataProviderCreateWithCFData(
+        NSData(bytes: &data, length: data.count * sizeof(PixelData))
+        )
+        let cgim = CGImageCreate(
+        Int(wth),
+                Int(ht),
+                Int(bitsPerComponent),
+                Int(bitsPerPixel),
+                Int(wth) * sizeof(PixelData),
+                rgbColorSpace,
+                bitmapInfo,
+                providerRef,
+                nil,
+                true,
+                CGColorRenderingIntent.RenderingIntentDefault
+        )
+        return UIImage(CGImage: cgim!)
+    }
+
+    func getImage2() -> UIImage {
+        let boxSize = 50
+        var countArray = [ComplexNumber]()
+        var pixels = [PixelData]()
+        for stepY: Int in 0 ... Int(ht) {
+            for stepX: Int in 0 ... Int(wth) {
+                let c: ComplexNumber = ComplexNumber(x: Double(stepX), y: Double(stepY))
+//                print("c is \(c)")
+//                print("count is \(count)")
+                countArray.append(c)
+            }
+        }
+        let redPixel = PixelData(red: 255, green: 0, blue: 0)
+        let greenPixel = PixelData(red: 0, green: 255, blue: 0)
+        let bluePixel = PixelData(red: 0, green: 0, blue: 255)
+        let orangePixel = PixelData(red: 255, green: 165, blue: 0)
+        let whitePixel = PixelData(red: 255, green: 255, blue: 255)
+
+        let tl = ComplexNumber(x: 0, y: 0)
+        let tr = ComplexNumber(x: Double(wth), y: 0)
+        let bl = ComplexNumber(x: Double(ht), y: 0)
+        let br = ComplexNumber(x: Double(ht), y: Double(wth))
+
+        for point in countArray {
+            // top left corner
+            if point.isNear(tl, distance: boxSize) {
+                pixels.append(redPixel)
+                print("got a tl corner: \(point)")
+            }
+                    // top right corner
+            else if point.isNear(tr, distance: boxSize) {
+                pixels.append(greenPixel)
+                print("got a tr corner: \(point)")
+            }
+                    // bottom left corner
+            else if point.isNear(bl, distance: boxSize) {
+                pixels.append(bluePixel)
+                print("got a bl corner: \(point)")
+            }
+                    // bottom right corner
+            else if point.isNear(br, distance: boxSize) {
+                pixels.append(orangePixel)
+                print("got a br corner: \(point)")
+            } else {
+                pixels.append(whitePixel)
             }
         }
 
@@ -134,5 +203,14 @@ class ComplexNumber: CustomStringConvertible {
 
     func add(that: ComplexNumber) -> ComplexNumber {
         return ComplexNumber(x: self.x + that.x, y: self.y + that.y)
+    }
+
+    func isNear(that: ComplexNumber, distance: Int) -> Bool {
+        let dX = abs(that.x - self.x)
+        let dY = abs(that.y - self.y)
+        if sqrt(dX * dX + dY * dY) < Double(distance) {
+            return true
+        }
+        return false
     }
 }

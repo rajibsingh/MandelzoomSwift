@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         let tl: ComplexNumber = ComplexNumber(x: -1.0, y: 0.75)
         let br: ComplexNumber = ComplexNumber(x: 0.5, y: -1)
         let renderer: MandelbrotRenderer = MandelbrotRenderer(height: height, width: width, topLeft: tl, bottomRight: br)
-        let uiImage = renderer.getImage()
+        let uiImage = renderer.getImage2()
         mainImage.image = uiImage
     }
 }
