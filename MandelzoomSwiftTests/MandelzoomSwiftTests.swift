@@ -82,6 +82,8 @@ class MandelzoomSwiftTests: XCTestCase {
         // check that render can return a picture
         let image = renderer.getImage()
         XCTAssertNotNil(image)
+        // check if we have the number of pixels we expect
+        image.size == 200 * 200
     }
     
 }
