@@ -22,7 +22,7 @@ class MandelbrotRenderer {
         var g: UInt8 = 0
         var b: UInt8 = 0
 
-        init(red: UInt8, green: UInt8, blue: UInt) {
+        init(red: UInt8, green: UInt8, blue: UInt8) {
             self.r = UInt8(red)
             self.g = UInt8(green)
             self.b = UInt8(blue)
@@ -79,14 +79,17 @@ class MandelbrotRenderer {
 
         // go through the countArray and generate the pixel map
         for count in countArray {
-            if count > threshold / 2 && count < threshold  {
-                pixels.append(grayPixel)
-            } else if count > threshold {
-                pixels.append(blackPixel)
-            }
-            else {
-                pixels.append(whitePixel)
-            }
+//            if count > threshold / 2 && count < threshold  {
+//                pixels.append(grayPixel)
+//            } else if count > threshold {
+//                pixels.append(blackPixel)
+//            }
+//            else {
+//                pixels.append(whitePixel)
+//            }
+            let grayShade: UInt8 = UInt8((1.0 / Double(count)) * 255)
+            let pixel = PixelData(red: grayShade, green: grayShade, blue: grayShade)
+            pixels.append(pixel)
         }
 
         let bitsPerComponent: UInt = 8
@@ -110,6 +113,7 @@ class MandelbrotRenderer {
         )
         print("pixels size is \(pixels.count)");
         print("countArray size is \(countArray.count)")
+//        print(countArray)
         return UIImage(CGImage: cgim!)
     }
 }
