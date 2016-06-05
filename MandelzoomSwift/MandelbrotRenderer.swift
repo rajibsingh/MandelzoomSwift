@@ -29,8 +29,10 @@ class MandelbrotRenderer {
 
     init(height: Int, width: Int, topLeft: ComplexNumber, bottomRight: ComplexNumber) {
         //height and width of window
-        ht = height
-        wth = width
+//        ht = height
+        ht = 100
+        wth = 100
+//        wth = width
         //coordinates of graph area
         self.topLeft = topLeft
         self.bottomRight = bottomRight
@@ -51,8 +53,8 @@ class MandelbrotRenderer {
         let boxSize = 50
         var countArray = [ComplexNumber]()
         var pixels = [PixelData]()
-        for stepX: Int in 0 ... Int(wth) {
-            for stepY: Int in 0 ... Int(ht) {
+        for stepY: Int in 0 ... Int(ht) {
+            for stepX: Int in 0 ... Int(wth) {
                 let c: ComplexNumber = ComplexNumber(x: Double(stepX), y: Double(stepY))
 //                print("c is \(c)")
 //                print("count is \(count)")
@@ -62,7 +64,7 @@ class MandelbrotRenderer {
         let redPixel = PixelData(red: 255, green: 0, blue: 0)
         let greenPixel = PixelData(red: 0, green: 255, blue: 0)
         let bluePixel = PixelData(red: 0, green: 0, blue: 255)
-        let orangePixel = PixelData(red: 255, green: 165, blue: 0)
+        let goldPixel = PixelData(red: 255, green: 215, blue: 0)
         let whitePixel = PixelData(red: 255, green: 255, blue: 255)
 
         let tl = ComplexNumber(x: 0, y: 0)
@@ -70,25 +72,26 @@ class MandelbrotRenderer {
         let bl = ComplexNumber(x: 0, y: Double(ht))
         let br = ComplexNumber(x: Double(wth), y: Double(ht))
 
+        // go through the countArray and generate the pixel map
         for point in countArray {
             // top left corner
             if point.isNear(tl, distance: boxSize) {
                 pixels.append(redPixel)
                 print("got a tl corner: \(point)")
             }
-                    // top right corner
+            // top right corner
             else if point.isNear(tr, distance: boxSize) {
                 pixels.append(greenPixel)
                 print("got a tr corner: \(point)")
             }
-                    // bottom left corner
+            // bottom left corner
             else if point.isNear(bl, distance: boxSize) {
                 pixels.append(bluePixel)
                 print("got a bl corner: \(point)")
             }
-                    // bottom right corner
+            // bottom right corner
             else if point.isNear(br, distance: boxSize) {
-                pixels.append(orangePixel)
+                pixels.append(goldPixel)
                 print("got a br corner: \(point)")
             } else {
                 pixels.append(whitePixel)
@@ -149,11 +152,12 @@ class ComplexNumber: CustomStringConvertible {
     }
 
     func isNear(that: ComplexNumber, distance: Int) -> Bool {
-        let dX = abs(that.x - self.x)
-        let dY = abs(that.y - self.y)
-        if sqrt(dX * dX + dY * dY) < Double(distance) {
+        let dX = that.x - self.x
+        let dY = that.y - self.y
+        if abs(dX) < Double(distance) && abs(dY) < Double(distance) {
             return true
+        } else {
+            return false
         }
-        return false
     }
 }
