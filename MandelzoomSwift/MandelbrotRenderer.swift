@@ -35,7 +35,7 @@ class MandelbrotRenderer {
         self.topLeft = topLeft
         self.bottomRight = bottomRight
         let dX = (bottomRight.x - topLeft.x) / Double(wth)
-        let dY = (bottomRight.y - topLeft.x) / Double(ht)
+        let dY = (bottomRight.y - topLeft.y) / Double(ht)
         offset = ComplexNumber(x: dX, y: dY)
     }
 
@@ -52,12 +52,10 @@ class MandelbrotRenderer {
     // code to create image from http://blog.human-friendly.com/drawing-images-from-pixel-data-in-swift
     func getImage() -> UIImage {
         let boxSize = 50
-//        var countArray = [ComplexNumber]()
         var countArray = [Int]()
         var pixels = [PixelData]()
         for stepY: Int in 0 ... Int(ht) - 1 {
             for stepX: Int in 0 ... Int(wth) - 1 {
-//                let c: ComplexNumber = ComplexNumber(x: Double(stepX), y: Double(stepY))
                 let x = topLeft.x + (Double(stepX) * offset.x)
                 let y = topLeft.y + (Double(stepY) * offset.y)
                 let c: ComplexNumber = ComplexNumber(x: x, y: y)
@@ -120,7 +118,7 @@ class ComplexNumber: CustomStringConvertible {
     var x: Double = 0
     var y: Double = 0
     var description: String {
-        return "\(self.x), \(self.y)i"
+        return "(\(self.x), \(self.y)i)"
     }
 
     init(x: Double, y: Double) {
