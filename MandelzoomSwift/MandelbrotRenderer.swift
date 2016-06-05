@@ -48,68 +48,11 @@ class MandelbrotRenderer {
 
     // code to create image from http://blog.human-friendly.com/drawing-images-from-pixel-data-in-swift
     func getImage() -> UIImage {
-        //derive topRight. Turns out I don't need bottomLeft
-        let topRight = ComplexNumber(x: bottomRight.x, y: topLeft.y)
-
-        //calculate offset
-        let dX = (topRight.x - topLeft.x) / Double(wth)
-        let dY = (bottomRight.y - topRight.y) / Double(ht)
-        let offset = ComplexNumber(x: dX, y: dY)
-        print("offset: \(offset)")
-
-        var countArray = [Int]()
-        for stepY: Int in 0 ... Int(ht) {
-            for stepX: Int in 0 ... Int(wth) {
-                let valX = topLeft.x + (Double(stepX) * offset.x)
-                let valY = topLeft.y + (Double(stepY) * offset.y)
-                let c: ComplexNumber = ComplexNumber(x: valX, y: valY)
-                let count: Int = getCount(c)
-//                print("c is \(c)")
-//                print("count is \(count)")
-                countArray.append(count)
-            }
-        }
-
-        let blackPixel = PixelData(red: 0, green: 0, blue: 0)
-        let whitePixel = PixelData(red: 255, green: 255, blue: 255)
-
-        var pixels = [PixelData]()
-        for count in countArray {
-            if (count >= threshold) {
-                pixels.append(whitePixel)
-            } else {
-                pixels.append(blackPixel)
-            }
-        }
-
-        let bitsPerComponent: UInt = 8
-        let bitsPerPixel: UInt = 32
-        var data = pixels // Copy to mutable []
-        let providerRef = CGDataProviderCreateWithCFData(
-        NSData(bytes: &data, length: data.count * sizeof(PixelData))
-        )
-        let cgim = CGImageCreate(
-        Int(wth),
-                Int(ht),
-                Int(bitsPerComponent),
-                Int(bitsPerPixel),
-                Int(wth) * sizeof(PixelData),
-                rgbColorSpace,
-                bitmapInfo,
-                providerRef,
-                nil,
-                true,
-                CGColorRenderingIntent.RenderingIntentDefault
-        )
-        return UIImage(CGImage: cgim!)
-    }
-
-    func getImage2() -> UIImage {
         let boxSize = 50
         var countArray = [ComplexNumber]()
         var pixels = [PixelData]()
-        for stepY: Int in 0 ... Int(ht) {
-            for stepX: Int in 0 ... Int(wth) {
+        for stepX: Int in 0 ... Int(wth) {
+            for stepY: Int in 0 ... Int(ht) {
                 let c: ComplexNumber = ComplexNumber(x: Double(stepX), y: Double(stepY))
 //                print("c is \(c)")
 //                print("count is \(count)")
@@ -124,8 +67,8 @@ class MandelbrotRenderer {
 
         let tl = ComplexNumber(x: 0, y: 0)
         let tr = ComplexNumber(x: Double(wth), y: 0)
-        let bl = ComplexNumber(x: Double(ht), y: 0)
-        let br = ComplexNumber(x: Double(ht), y: Double(wth))
+        let bl = ComplexNumber(x: 0, y: Double(ht))
+        let br = ComplexNumber(x: Double(wth), y: Double(ht))
 
         for point in countArray {
             // top left corner
