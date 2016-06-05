@@ -61,7 +61,7 @@ class MandelbrotRenderer {
                 let c: ComplexNumber = ComplexNumber(x: x, y: y)
                 var count = getCount(c)
                 countArray.append(count)
-                print("c is \(c) and count is \(count)")
+//                print("c is \(c) and count is \(count)")
             }
         }
         let redPixel = PixelData(red: 255, green: 0, blue: 0)

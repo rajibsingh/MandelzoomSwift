@@ -28,8 +28,8 @@ class ViewController: UIViewController {
         statuslabel.text = String(mainImage.image?.size)
         let height = Int(mainImage.frame.size.height)
         let width = Int(mainImage.frame.size.width)
-        let tl: ComplexNumber = ComplexNumber(x: -1.0, y: 0.75)
-        let br: ComplexNumber = ComplexNumber(x: 0.5, y: -1)
+        let tl: ComplexNumber = ComplexNumber(x: -2.0, y: 1.5)
+        let br: ComplexNumber = ComplexNumber(x: 0.5, y: -1.25)
         let renderer: MandelbrotRenderer = MandelbrotRenderer(height: height, width: width, topLeft: tl, bottomRight: br)
         let uiImage = renderer.getImage()
         mainImage.image = uiImage
