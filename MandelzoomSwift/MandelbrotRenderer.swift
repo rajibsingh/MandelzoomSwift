@@ -53,8 +53,8 @@ class MandelbrotRenderer {
         let boxSize = 50
         var countArray = [ComplexNumber]()
         var pixels = [PixelData]()
-        for stepY: Int in 0 ... Int(ht) {
-            for stepX: Int in 0 ... Int(wth) {
+        for stepY: Int in 0 ... Int(ht) - 1 {
+            for stepX: Int in 0 ... Int(wth) - 1 {
                 let c: ComplexNumber = ComplexNumber(x: Double(stepX), y: Double(stepY))
 //                print("c is \(c)")
 //                print("count is \(count)")
@@ -96,6 +96,10 @@ class MandelbrotRenderer {
             } else {
                 pixels.append(whitePixel)
             }
+
+            if pixels.count % wth - 1 == 0 {
+                print("new line!")
+            }
         }
 
         let bitsPerComponent: UInt = 8
@@ -117,6 +121,8 @@ class MandelbrotRenderer {
                 true,
                 CGColorRenderingIntent.RenderingIntentDefault
         )
+        print("pixels size is \(pixels.count)");
+        print("countArray size is \(countArray.count)")
         return UIImage(CGImage: cgim!)
     }
 }
