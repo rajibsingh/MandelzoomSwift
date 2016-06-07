@@ -61,32 +61,15 @@ class MandelbrotRenderer {
                 let c: ComplexNumber = ComplexNumber(x: x, y: y)
                 var count = getCount(c)
                 countArray.append(count)
-//                print("c is \(c) and count is \(count)")
             }
         }
-        let redPixel = PixelData(red: 255, green: 0, blue: 0)
-        let greenPixel = PixelData(red: 0, green: 255, blue: 0)
-        let bluePixel = PixelData(red: 0, green: 0, blue: 255)
-        let goldPixel = PixelData(red: 255, green: 215, blue: 0)
-        let whitePixel = PixelData(red: 255, green: 255, blue: 255)
-        let blackPixel = PixelData(red: 0, green: 0, blue: 0)
-        let grayPixel = PixelData(red: 125, green: 125, blue: 125)
 
         let tl = ComplexNumber(x: 0, y: 0)
         let tr = ComplexNumber(x: Double(wth), y: 0)
         let bl = ComplexNumber(x: 0, y: Double(ht))
         let br = ComplexNumber(x: Double(wth), y: Double(ht))
 
-        // go through the countArray and generate the pixel map
         for count in countArray {
-//            if count > threshold / 2 && count < threshold  {
-//                pixels.append(grayPixel)
-//            } else if count > threshold {
-//                pixels.append(blackPixel)
-//            }
-//            else {
-//                pixels.append(whitePixel)
-//            }
             let grayShade: UInt8 = UInt8((1.0 / Double(count)) * 255)
             let pixel = PixelData(red: grayShade, green: grayShade, blue: grayShade)
             pixels.append(pixel)
@@ -113,8 +96,25 @@ class MandelbrotRenderer {
         )
         print("pixels size is \(pixels.count)");
         print("countArray size is \(countArray.count)")
-//        print(countArray)
+        print(getArrayCounts(countArray))
         return UIImage(CGImage: cgim!)
+    }
+
+    func getArrayCounts(input : [Int]) -> String {
+       var counts = [Int : Int]()
+        for count in input {
+            if counts[count] != nil {
+                counts[count] = counts[count]! + 1
+            } else {
+                counts[count] = 1
+            }
+        }
+        print("printing \(counts.count) keys:")
+        var retval: String = ""
+        for (number, numberCount) in counts {
+           retval += "\(number): \(numberCount)\r\n"
+        }
+        return retval
     }
 }
 
