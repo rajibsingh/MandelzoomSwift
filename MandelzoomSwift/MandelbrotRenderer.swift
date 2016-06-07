@@ -116,7 +116,13 @@ class MandelbrotRenderer {
                 counts[count] = 1
             }
         }
+        print("sorting keys")
+        var keys = counts.keys.sort()
+        for key in keys {
+                print("key: \(key) value: \(counts[key]!)")
+        }
         return counts.count
+
     }
 
     func getArrayCounts(input : [Int]) -> String {
