@@ -70,15 +70,23 @@ class MandelbrotRenderer {
         let br = ComplexNumber(x: Double(wth), y: Double(ht))
 
         let whitepixel: PixelData = PixelData(red: 255, green: 255, blue: 255)
+        let blackpixel: PixelData = PixelData(red: 0, green: 0, blue: 0)
+
+        let maxcolors = analyzeForColors(countArray)
+        print("maxcolors: \(maxcolors)")
+
         for count in countArray {
-            var x = count
-            if x < 100 {
-                x = x / 2
+            if count == iterations {
+                pixels.append(blackpixel)
+            } else if count > 4 {
+                pixels.append(whitepixel)
+            } else {
+                let grayShade: UInt8 = UInt8((1.0 / Double(count)) * 255)
+                let pixel = PixelData(red: grayShade, green: grayShade, blue: grayShade)
+                pixels.append(pixel)
             }
-            let grayShade: UInt8 = UInt8((1.0 / Double(count)) * 255)
-            let pixel = PixelData(red: grayShade, green: grayShade, blue: grayShade)
-            pixels.append(pixel)
         }
+
 
         let bitsPerComponent: UInt = 8
         let bitsPerPixel: UInt = 32
@@ -101,8 +109,6 @@ class MandelbrotRenderer {
         )
         print("pixels size is \(pixels.count)");
         print("countArray size is \(countArray.count)")
-        let maxcolors = analyzeForColors(countArray)
-        print("maxcolors: \(maxcolors)")
         return UIImage(CGImage: cgim!)
     }
 
@@ -117,7 +123,7 @@ class MandelbrotRenderer {
             }
         }
         print("sorting keys")
-        var keys = counts.keys.sort()
+        let keys = counts.keys.sort()
         for key in keys {
                 print("key: \(key) value: \(counts[key]!)")
         }
