@@ -18,3 +18,7 @@ learning iOS development and Swift to put together a viewer for the mandelbrot s
 * smoothing? Gaussian blur?
 * performance?
 
+
+# performance
+6/7
+> /Users/raj/repos/MandelzoomSwift/MandelzoomSwiftTests/MandelzoomSwiftTests.swift:38: Test Case '-[MandelzoomSwiftTests.MandelzoomSwiftTests testPerformanceExample]' measured [Time, seconds] average: 2.332, relative standard deviation: 1.332%, values: [2.315850, 2.359547, 2.336854, 2.301020, 2.278341, 2.332330, 2.306003, 2.334244, 2.370551, 2.382907], performanceMetricID:com.apple.XCTPerformanceMetric_WallClockTime, baselineName: "", baselineAverage: , maxPercentRegression: 10.000%, maxPercentRelativeStandardDeviation: 10.000%, maxRegression: 0.100, maxStandardDeviation: 0.100
