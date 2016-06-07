@@ -28,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B81B82B9180D3F7D0DE7BC3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		35BA3AE11CC338380077128F /* MandelzoomSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MandelzoomSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35BA3AE41CC338380077128F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		35BA3AE61CC338380077128F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +67,7 @@
 				35BA3AE31CC338380077128F /* MandelzoomSwift */,
 				35BA3AF81CC338380077128F /* MandelzoomSwiftTests */,
 				35BA3AE21CC338380077128F /* Products */,
+				1B81B82B9180D3F7D0DE7BC3 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};

@@ -13,7 +13,7 @@ class MandelbrotRenderer {
     private let topLeft: ComplexNumber
     private let bottomRight: ComplexNumber
     private let threshold = 10
-    private let iterations = 200
+    private let iterations = 300
     private let offset: ComplexNumber
 
     struct PixelData {
@@ -69,7 +69,12 @@ class MandelbrotRenderer {
         let bl = ComplexNumber(x: 0, y: Double(ht))
         let br = ComplexNumber(x: Double(wth), y: Double(ht))
 
+        let whitepixel: PixelData = PixelData(red: 255, green: 255, blue: 255)
         for count in countArray {
+            var x = count
+            if x < 100 {
+                x = x / 2
+            }
             let grayShade: UInt8 = UInt8((1.0 / Double(count)) * 255)
             let pixel = PixelData(red: grayShade, green: grayShade, blue: grayShade)
             pixels.append(pixel)
@@ -96,8 +101,22 @@ class MandelbrotRenderer {
         )
         print("pixels size is \(pixels.count)");
         print("countArray size is \(countArray.count)")
-        print(getArrayCounts(countArray))
+        let maxcolors = analyzeForColors(countArray)
+        print("maxcolors: \(maxcolors)")
         return UIImage(CGImage: cgim!)
+    }
+
+
+    func analyzeForColors(input : [Int]) -> Int  {
+        var counts = [Int : Int]()
+        for count in input {
+            if counts[count] != nil {
+                counts[count] = counts[count]! + 1
+            } else {
+                counts[count] = 1
+            }
+        }
+        return counts.count
     }
 
     func getArrayCounts(input : [Int]) -> String {
