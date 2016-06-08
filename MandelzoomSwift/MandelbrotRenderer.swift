@@ -87,7 +87,6 @@ class MandelbrotRenderer {
             }
         }
 
-
         let bitsPerComponent: UInt = 8
         let bitsPerPixel: UInt = 32
         var data = pixels // Copy to mutable []
@@ -124,11 +123,10 @@ class MandelbrotRenderer {
         }
         print("sorting keys")
         let keys = counts.keys.sort()
-        for key in keys {
-                print("key: \(key) value: \(counts[key]!)")
-        }
+//        for key in keys {
+//                print("key: \(key) value: \(counts[key]!)")
+//        }
         return counts.count
-
     }
 
     func getArrayCounts(input : [Int]) -> String {
