@@ -32,6 +32,12 @@ class ViewController: UIViewController {
         let br: ComplexNumber = ComplexNumber(x: 0.5, y: -1.25)
         let renderer: MandelbrotRenderer = MandelbrotRenderer(height: height, width: width, topLeft: tl, bottomRight: br)
         let uiImage = renderer.getImage()
+
+        //try to apply a blur effect
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark);
+        let blurView = UIVisualEffectView(effect: blurEffect)
+//        blurView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        mainImage.insertSubview(blurView, atIndex: 0)
         mainImage.image = uiImage
     }
 }
